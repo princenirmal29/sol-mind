@@ -1,0 +1,207 @@
+/* ===========================
+   SOL-MIND 2.0 CLEAN UI
+   White + Soft Yellow Theme
+   =========================== */
+
+:root {
+  --bg-main: #fdfcf7;
+  --bg-card: #ffffff;
+  --accent: #facc15;
+  --accent-soft: #fef3c7;
+  --text-main: #1f2937;
+  --text-light: #6b7280;
+  --border: #e5e7eb;
+  --radius: 14px;
+  --shadow: 0 6px 20px rgba(0,0,0,0.06);
+}
+
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: linear-gradient(135deg, #fffef7, azure);
+  font-family: 'Bricolage Grotesque', sans-serif;
+  color: var(--text-main);
+}
+
+/* CONTAINER */
+#app {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* TOPBAR */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.brand-name {
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.brand-version {
+  font-size: 12px;
+  background: var(--accent-soft);
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+/* STATUS */
+.status-chip {
+  background: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  font-size: 13px;
+}
+
+/* GRID */
+.layout {
+  display: grid;
+  grid-template-columns: 280px 1fr 280px;
+  gap: 20px;
+}
+
+/* CARD */
+.panel, .score-panel {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+
+/* FIX CENTER SIZE */
+.score-panel {
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* HEADINGS */
+.panel__title {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.panel__eyebrow {
+  font-size: 11px;
+  color: var(--text-light);
+}
+
+/* INPUTS */
+.field__input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: #fafafa;
+}
+
+.field__input:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+
+/* SLIDER */
+.field__range {
+  width: 100%;
+}
+
+/* BUTTON */
+.btn-primary {
+  margin-top: 15px;
+  padding: 12px;
+  background: var(--accent);
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #111;
+}
+
+.btn-primary:hover {
+  background: #fbbf24;
+}
+
+/* SCORE */
+.score-number {
+  font-size: 48px;
+  font-weight: 700;
+}
+
+.state-display {
+  margin-top: 10px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: var(--accent-soft);
+  font-size: 14px;
+}
+
+/* BREAKDOWN */
+.breakdown {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.breakdown-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: #fafafa;
+  margin-bottom: 6px;
+}
+
+/* INSIGHTS */
+.insight-card {
+  padding: 10px;
+  background: #fafafa;
+  border-radius: 10px;
+  margin-bottom: 8px;
+}
+
+/* TREND */
+.trend-wrap {
+  height: 80px;
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.trend-bar {
+  width: 100%;
+  background: var(--accent);
+  border-radius: 4px 4px 0 0;
+}
+
+/* SOUND */
+.play-btn {
+  background: var(--accent);
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* ERROR FIX (hidden by default) */
+.error-alert {
+  display: none;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
