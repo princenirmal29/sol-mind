@@ -1,7 +1,4 @@
-/**
- * SOL-MIND 2.0 — Backend API
- * Express server for Light-Mind Balance Index (LMBI) computation
- */
+
 
 const express = require("express");
 const cors = require("cors");
@@ -13,17 +10,9 @@ app.use(express.json());
 // In-memory history store (last 50 entries)
 const lmbiHistory = [];
 
-// ─── LMBI CALCULATION ENGINE ─────────────────────────────────────────────────
-
-/**
- * Normalize a value from [min, max] to [0, 1]
- */
+//lmbi formulae
 const normalize = (val, min, max) => Math.max(0, Math.min(1, (val - min) / (max - min)));
 
-/**
- * Weather condition → score multiplier
- * Clear sky boosts light exposure; storms/overcast reduce it
- */
 const weatherMultiplier = (condition = "") => {
   const c = condition.toLowerCase();
   if (c.includes("clear") || c.includes("sunny")) return 1.0;
@@ -35,16 +24,6 @@ const weatherMultiplier = (condition = "") => {
   return 0.7; // default for unknown
 };
 
-/**
- * Core LMBI scoring:
- *  - Sleep quality (0–1): sleep hours mapped 3–9h optimal
- *  - Stress penalty (0–1): inverted 1–5 scale
- *  - Outdoor bonus (0–1): 0–120 minutes mapped
- *  - Weather modifier: multiplies outdoor score
- *  - Night mode: if night, outdoor score is zeroed (no sun exposure)
- *
- * Weights: sleep=35%, stress=30%, outdoor=25%, time_bonus=10%
- */
 const computeLMBI = ({ sleep, stress, outdoor, weather, isNight }) => {
   const sleepScore = normalize(sleep, 3, 9); // ideal: 7–9h
   const stressScore = 1 - normalize(stress, 1, 5); // lower stress = better
@@ -142,12 +121,7 @@ const generateInsights = ({ sleep, stress, outdoor, weather, isNight, score }) =
   return insights;
 };
 
-// ─── ROUTES ──────────────────────────────────────────────────────────────────
 
-/**
- * POST /analyze
- * Body: { sleep, stress, outdoor, weather, timestamp }
- */
 app.post("/analyze", (req, res) => {
   const { sleep, stress, outdoor, weather, timestamp } = req.body;
 
@@ -206,20 +180,15 @@ app.post("/analyze", (req, res) => {
   return res.json({ score, state, insights, nightMode, soundProfile, timestamp: now.toISOString() });
 });
 
-/**
- * GET /history
- * Returns last 10 LMBI records
- */
+//get history
 app.get("/history", (req, res) => {
   res.json({ history: lmbiHistory.slice(0, 10) });
 });
 
-/**
- * GET /health
- */
+//get health
 app.get("/health", (req, res) => res.json({ status: "ok", version: "2.0" }));
 
-// ─── START ────────────────────────────────────────────────────────────────────
+// start
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
