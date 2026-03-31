@@ -1,9 +1,5 @@
-/**
- * SOL-MIND 2.0 — Frontend Script (UI Redesign Edition)
- * All core functionality preserved; UI rendering upgraded.
- */
-
-// ─── CONFIG ──────────────────────────────────────────────────
+/* sol-mind 2.O at 3rd march */
+//  CONFIG 
 const API_BASE = "http://localhost:3001";
 const OW_KEY   = "REPLACE_WITH_YOUR_OPENWEATHER_API_KEY";
 
@@ -13,12 +9,12 @@ const SOUND_SOURCES = {
   forest: "https://www.soundjay.com/nature/sounds/forest-1.mp3",
 };
 
-// ─── STATE ───────────────────────────────────────────────────
+//  STATE 
 let weatherData  = { condition: "Unknown", icon: "🌤️", temp: "--" };
 let currentSound = null;
 let soundPaused  = false;
 
-// ─── DOM REFS ────────────────────────────────────────────────
+//  DOM REFS 
 const $ = (id) => document.getElementById(id);
 const dom = {
   weatherIcon:   $("weather-icon"),
@@ -52,7 +48,7 @@ const dom = {
   errorText:     $("error-text"),
 };
 
-// ─── CLOCK ───────────────────────────────────────────────────
+//  CLOCK 
 function updateClock() {
   const now = new Date();
   const h   = now.getHours().toString().padStart(2, "0");
@@ -62,7 +58,7 @@ function updateClock() {
 setInterval(updateClock, 1000);
 updateClock();
 
-// ─── WEATHER ─────────────────────────────────────────────────
+// WEATHER 
 async function fetchWeather() {
   if (!navigator.geolocation) return;
   navigator.geolocation.getCurrentPosition(async (pos) => {
@@ -101,7 +97,7 @@ function mapWeatherIcon(main) {
   return "🌤️";
 }
 
-// ─── STRESS SLIDER ───────────────────────────────────────────
+//stress slider
 dom.stressSlider.addEventListener("input", () => {
   const val = parseInt(dom.stressSlider.value);
   dom.stressValue.textContent = val;
@@ -112,7 +108,7 @@ dom.stressSlider.addEventListener("input", () => {
 const initStress = parseInt(dom.stressSlider.value);
 dom.pips.forEach((pip, i) => pip.classList.toggle("active", i < initStress));
 
-// ─── ANALYZE ─────────────────────────────────────────────────
+// analyze
 async function analyze() {
   const sleep   = parseFloat(dom.sleepInput.value);
   const stress  = parseInt(dom.stressSlider.value);
@@ -163,7 +159,7 @@ async function analyze() {
   }
 }
 
-// ─── RENDER: SCORE ───────────────────────────────────────────
+//RENDER: SCORE
 function renderScore(score, state) {
   dom.scoreNumber.textContent = score;
 
@@ -185,7 +181,7 @@ function renderScore(score, state) {
   dom.stateText.textContent = state;
 }
 
-// ─── RENDER: BREAKDOWN ───────────────────────────────────────
+//  RENDER: BREAKDOWN 
 function renderBreakdown(sleep, stress, outdoor) {
   // Compute contribution signals (indicative, not exact LMBI weights)
   const sleepNorm   = Math.max(0, Math.min(1, (sleep  - 3) / 6));   // 3–9h
@@ -231,7 +227,7 @@ function renderBreakdown(sleep, stress, outdoor) {
   `).join("");
 }
 
-// ─── RENDER: INSIGHTS ────────────────────────────────────────
+// RENDER: INSIGHTS
 const INSIGHT_ICONS = ["💤", "🧠", "🌿", "🌦️", "✦"];
 
 function renderInsights(insights) {
@@ -243,7 +239,7 @@ function renderInsights(insights) {
   `).join("");
 }
 
-// ─── RENDER: NIGHT MODE ──────────────────────────────────────
+//  RENDER: NIGHT MODE
 function renderNightMode(nightMode) {
   if (!nightMode?.active) {
     dom.nightCard.classList.remove("visible");
@@ -255,7 +251,7 @@ function renderNightMode(nightMode) {
   dom.nightCard.classList.add("visible");
 }
 
-// ─── RENDER: SOUND ENGINE ────────────────────────────────────
+//  RENDER: SOUND ENGINE
 function renderSoundEngine(soundProfile) {
   if (!soundProfile) { dom.soundCard.classList.remove("visible"); return; }
 
@@ -296,7 +292,7 @@ dom.volumeSlider.addEventListener("input", () => {
   if (currentSound) currentSound.volume = parseFloat(dom.volumeSlider.value);
 });
 
-// ─── RENDER: HISTORY ─────────────────────────────────────────
+//RENDER: HISTORY 
 async function loadHistory() {
   try {
     const res  = await fetch(`${API_BASE}/history`);
@@ -326,7 +322,7 @@ function renderTrend(history) {
   }).join("");
 }
 
-// ─── UI HELPERS ──────────────────────────────────────────────
+//Ui helpers
 function setLoading(state) {
   dom.analyzeBtn.classList.toggle("loading", state);
 }
@@ -340,7 +336,7 @@ function hideError() {
   dom.errorBanner.classList.remove("visible");
 }
 
-// ─── INIT ────────────────────────────────────────────────────
+// init
 function init() {
   fetchWeather();
   loadHistory();
